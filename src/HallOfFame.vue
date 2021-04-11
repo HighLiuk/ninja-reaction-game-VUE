@@ -1,28 +1,35 @@
-<template lang="pug">
-.row
-  .col-md-8.offset-md-2
-    p.lead(v-if="!isLoaded") Loading...
-    table.table.table-striped.table-hover(v-else)
-      thead
-        tr.table-success
-          th.short(scope="col") Ranking
-          th(scope="col") Player
-          th(scope="col") Score
-      tbody
-        tr(v-for="(ranking, index) in rankings")
-          th.short(scope="row") {{ index + 1 }}
-          td {{ ranking.name }}
-          td {{ ranking.score }} ms
+<template>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <p class="lead" v-if="!isLoaded">Loading...</p>
+      <table class="table table-striped table-hover" v-else>
+        <thead>
+          <tr class="table-success">
+            <th class="short" scope="col">Ranking</th>
+            <th scope="col">Player</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(ranking, index) in rankings">
+            <th class="short" scope="row">{{ index + 1 }}</th>
+            <td>{{ ranking.name }}</td>
+            <td>{{ ranking.score }} ms</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </template>
 
 <script>
-import { hallOfFame } from '@/firebase'
+import { hallOfFame } from "@/firebase"
 
 export default {
   data() {
     return {
       isLoaded: false,
-      rankings: null
+      rankings: null,
     }
   },
   mounted() {
@@ -32,12 +39,13 @@ export default {
     async showTable() {
       this.rankings = await hallOfFame()
       this.isLoaded = true
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style lang="sass" scoped>
-.short
-  max-width: 50px
+<style lang="scss" scoped>
+.short {
+  max-width: 50px;
+}
 </style>
